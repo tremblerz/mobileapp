@@ -3,10 +3,11 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
     'plugin:jest/recommended',
   ],
   parser: 'babel-eslint',
-  plugins: ['react', 'react-native', 'detox'],
+  plugins: ['react', 'react-hooks', 'react-native', 'detox'],
   parserOptions: {
     ecmaVersion: 6,
     sourceType: 'module',
@@ -30,6 +31,7 @@ module.exports = {
       version: 'detect',
     },
   },
+  ignorePatterns: ['android/**', 'ios/**'],
   rules: {
     // 0 is for off, 1 is for warning, 2 is for error
     'eol-last': 2, // Require file to end with single newline
@@ -63,6 +65,21 @@ module.exports = {
     'react/no-string-refs': 1, // Prevent string definitions for references and prevent referencing this.refs
     'react/prop-types': 0, // Prevent missing props validation in a React component definition
     'react/react-in-jsx-scope': 2, // Prevent missing React when using JSX
-    'react/self-closing-comp': 2, // Prevent extra closing tags for components without children
+    'react/self-closing-comp': 2, // Prevent extra closing tags for components without children,
+    'react/prefer-stateless-function': 2, // Use functional components vs classes
   },
+  overrides: [
+    {
+      files: ['*.spec.js'], // Or *.test.js
+      rules: {
+        'react-native/no-raw-text': 0,
+      },
+    },
+    {
+      files: ['e2e/**/*.js'], // Or *.test.js
+      rules: {
+        'jest/expect-expect': 0, // these files do expectations inside page objects
+      },
+    },
+  ],
 };
